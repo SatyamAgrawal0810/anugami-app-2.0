@@ -1,18 +1,17 @@
 #!/bin/sh
 set -e
 
-echo "Installing Flutter"
+echo "Install Flutter"
 git clone https://github.com/flutter/flutter.git --depth 1 -b stable
 export PATH="$PATH:`pwd`/flutter/bin"
 
-echo "Flutter version"
 flutter --version
 
-echo "Getting packages"
-flutter pub get
-
-echo "Cleaning project"
+echo "Clean project"
 flutter clean
+
+echo "Get dependencies"
+flutter pub get
 
 echo "Install CocoaPods"
 cd ios
