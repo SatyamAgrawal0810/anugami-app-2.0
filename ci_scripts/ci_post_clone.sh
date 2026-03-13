@@ -7,13 +7,10 @@ export PATH="$PATH:`pwd`/flutter/bin"
 
 flutter --version
 
-echo "Install packages"
+echo "Installing dependencies"
 flutter pub get
 
-echo "Prepare iOS"
+echo "Preparing iOS project"
 cd ios
 pod install --repo-update
 cd ..
-
-echo "Generate Flutter iOS config"
-flutter build ios --no-codesign
