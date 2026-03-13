@@ -2,15 +2,19 @@
 set -e
 
 echo "Installing Flutter"
+
 git clone https://github.com/flutter/flutter.git --depth 1 -b stable
 export PATH="$PATH:`pwd`/flutter/bin"
 
-flutter --version
+flutter doctor
 
-echo "Installing dependencies"
+echo "Fetching Flutter packages"
 flutter pub get
 
-echo "Preparing iOS project"
+echo "Generating iOS Flutter files"
+flutter build ios --debug --no-codesign
+
+echo "Installing CocoaPods"
 cd ios
 pod install --repo-update
 cd ..
