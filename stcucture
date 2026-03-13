@@ -1,0 +1,181 @@
+anugami_mobile/
+├── android/                  # Android-specific code
+├── ios/                      # iOS-specific code
+├── lib/
+│   ├── api/                  # API service layer
+│   │   ├── api_client.dart   # Base HTTP client with interceptors
+│   │   ├── api_endpoints.dart  # All API endpoints as constants
+│   │   ├── api_provider.dart   # API provider implementation
+│   │   └── services/         # Service classes for each domain
+│   │       ├── auth_service.dart
+│   │       ├── product_service.dart
+│   │       ├── cart_service.dart
+│   │       ├── order_service.dart
+│   │       ├── payment_service.dart
+│   │       ├── user_service.dart
+│   │       └── seller_service.dart
+│   │
+│   ├── blocs/                # Business Logic Components using BLoC pattern
+│   │   ├── auth/             # Authentication BLoCs
+│   │   │   ├── auth_bloc.dart
+│   │   │   ├── auth_event.dart
+│   │   │   └── auth_state.dart
+│   │   ├── cart/             # Cart management BLoCs
+│   │   │   ├── cart_bloc.dart
+│   │   │   ├── cart_event.dart
+│   │   │   └── cart_state.dart
+│   │   ├── product/          # Product related BLoCs
+│   │   │   ├── product_bloc.dart
+│   │   │   ├── product_event.dart
+│   │   │   └── product_state.dart
+│   │   ├── order/            # Order management BLoCs
+│   │   │   ├── order_bloc.dart
+│   │   │   ├── order_event.dart
+│   │   │   └── order_state.dart
+│   │   └── ... (other domain BLoCs)
+│   │
+│   ├── config/               # App configuration
+│   │   ├── app_config.dart   # Environment specific config
+│   │   ├── routes.dart       # App routes definition
+│   │   └── theme.dart        # App theme configuration
+│   │
+│   ├── constants/            # Application constants
+│   │   ├── api_constants.dart
+│   │   ├── asset_constants.dart
+│   │   └── string_constants.dart
+│   │
+│   ├── core/                 # Core functionality
+│   │   ├── error/            # Error handling
+│   │   │   ├── exceptions.dart
+│   │   │   └── failures.dart
+│   │   ├── network/          # Network related utilities
+│   │   │   ├── network_info.dart
+│   │   │   └── response_handler.dart
+│   │   └── utils/            # Utility classes
+│   │       ├── validators.dart
+│   │       ├── date_formatter.dart
+│   │       └── currency_formatter.dart
+│   │
+│   ├── data/                 # Data layer
+│   │   ├── datasources/      # Remote and local data sources
+│   │   │   ├── local/
+│   │   │   │   ├── auth_local_datasource.dart
+│   │   │   │   └── cart_local_datasource.dart
+│   │   │   └── remote/
+│   │   │       ├── auth_remote_datasource.dart
+│   │   │       ├── product_remote_datasource.dart
+│   │   │       └── ... (other remote datasources)
+│   │   ├── models/           # Data models
+│   │   │   ├── user_model.dart
+│   │   │   ├── product_model.dart
+│   │   │   ├── cart_model.dart
+│   │   │   ├── order_model.dart
+│   │   │   └── ... (other models)
+│   │   └── repositories/     # Repository implementations
+│   │       ├── auth_repository_impl.dart
+│   │       ├── product_repository_impl.dart
+│   │       └── ... (other repositories)
+│   │
+│   ├── domain/               # Domain layer (business logic)
+│   │   ├── entities/         # Core business entities
+│   │   │   ├── user.dart
+│   │   │   ├── product.dart
+│   │   │   ├── cart.dart
+│   │   │   └── ... (other entities)
+│   │   ├── repositories/     # Repository interfaces
+│   │   │   ├── auth_repository.dart
+│   │   │   ├── product_repository.dart
+│   │   │   └── ... (other repository interfaces)
+│   │   └── usecases/         # Business use cases
+│   │       ├── auth/
+│   │       │   ├── login_user.dart
+│   │       │   ├── register_user.dart
+│   │       │   └── logout_user.dart
+│   │       ├── product/
+│   │       │   ├── get_products.dart
+│   │       │   ├── get_product_details.dart
+│   │       │   └── search_products.dart
+│   │       └── ... (other use cases)
+│   │
+│   ├── l10n/                 # Localization
+│   │   ├── app_en.arb        # English strings
+│   │   └── app_hi.arb        # Hindi strings
+│   │
+│   ├── presentation/         # UI Layer
+│   │   ├── common/           # Common widgets
+│   │   │   ├── app_bar.dart
+│   │   │   ├── drawer.dart
+│   │   │   ├── loading_indicator.dart
+│   │   │   └── ... (other common widgets)
+│   │   │
+│   │   ├── pages/            # App pages/screens
+│   │   │   ├── auth/         # Authentication screens
+│   │   │   │   ├── login_page.dart
+│   │   │   │   ├── register_page.dart
+│   │   │   │   └── forgot_password_page.dart
+│   │   │   ├── home/         # Home screens
+│   │   │   │   ├── home_page.dart
+│   │   │   │   ├── category_list.dart
+│   │   │   │   └── featured_products.dart
+│   │   │   ├── product/      # Product related screens
+│   │   │   │   ├── product_list_page.dart
+│   │   │   │   ├── product_detail_page.dart
+│   │   │   │   └── search_page.dart
+│   │   │   ├── cart/         # Cart related screens
+│   │   │   │   ├── cart_page.dart
+│   │   │   │   └── checkout_page.dart
+│   │   │   ├── order/        # Order related screens
+│   │   │   │   ├── order_history_page.dart
+│   │   │   │   ├── order_detail_page.dart
+│   │   │   │   └── track_order_page.dart
+│   │   │   ├── profile/      # User profile screens
+│   │   │   │   ├── profile_page.dart
+│   │   │   │   ├── address_page.dart
+│   │   │   │   └── settings_page.dart
+│   │   │   ├── seller/       # Seller related screens (if applicable)
+│   │   │   │   ├── seller_li sting_page.dart
+│   │   │   │   └── seller_detail_page.dart
+│   │   │   ├── payment/      # Payment related screens
+│   │   │   │   ├── payment_methods_page.dart
+│   │   │   │   └── payment_status_page.dart
+│   │   │   └── support/      # Customer support screens
+│   │   │       ├── support_page.dart
+│   │   │       └── ticket_detail_page.dart
+│   │   │
+│   │   └── widgets/          # Reusable UI components
+│   │       ├── product_card.dart
+│   │       ├── category_card.dart
+│   │       ├── cart_item.dart
+│   │       ├── order_item.dart
+│   │       └── ... (other widgets)
+│   │
+│   ├── di/                   # Dependency injection
+│   │   └── injection_container.dart
+│   │
+│   └── main.dart             # App entry point
+│
+├── assets/                   # Static assets
+│   ├── images/
+│   │   └── ... (image files)
+│   ├── icons/
+│   │   └── ... (icon files)
+│   └── fonts/
+│       └── ... (font files)
+│
+├── test/                     # Unit and widget tests
+│   ├── data/
+│   │   ├── datasources/
+│   │   ├── models/
+│   │   └── repositories/
+│   ├── domain/
+│   │   └── usecases/
+│   └── presentation/
+│       ├── blocs/
+│       └── pages/
+│
+├── integration_test/         # Integration tests
+│   └── app_test.dart
+│
+├── pubspec.yaml              # Flutter package dependencies
+├── analysis_options.yaml     # Linting rules
+└── README.md                 # Project documentation

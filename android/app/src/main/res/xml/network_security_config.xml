@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<network-security-config>
+    <!-- Allow cleartext traffic for your specific IP -->
+    <domain-config cleartextTrafficPermitted="true">
+        <domain includeSubdomains="true">65.1.88.148</domain>
+    </domain-config>
+
+    <!-- For debugging purposes only (optional) -->
+    <debug-overrides>
+        <trust-anchors>
+            <certificates src="system" />
+            <certificates src="user" />
+        </trust-anchors>
+    </debug-overrides>
+</network-security-config>

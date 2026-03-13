@@ -1,0 +1,49 @@
+{
+  "project_info": {
+    "project_number": "323526596679",
+    "firebase_url": "https://anugami-346e8-default-rtdb.firebaseio.com",
+    "project_id": "anugami-346e8",
+    "storage_bucket": "anugami-346e8.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:323526596679:android:ef888efe7ec21341103962",
+        "android_client_info": {
+          "package_name": "com.anugami.anu_app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC4n8Cx87sMHJXl_mtGv0l42OudVihr3M8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:323526596679:android:b5f10e245b326bf0103962",
+        "android_client_info": {
+          "package_name": "com.example.anu_app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC4n8Cx87sMHJXl_mtGv0l42OudVihr3M8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
