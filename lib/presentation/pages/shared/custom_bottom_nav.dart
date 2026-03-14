@@ -1,5 +1,6 @@
 // lib/presentation/pages/shared/custom_bottom_nav.dart
 // ✅ FIXED: Bottom nav always visible with SafeArea
+// ✨ UPDATED: Blended with home screen warm cream/orange theme
 
 import 'package:anu_app/providers/cart_provider.dart';
 import 'package:anu_app/providers/wishlist_provider.dart';
@@ -30,8 +31,12 @@ class _CustomBottomNavBarState extends State<CustomBottomNavBar>
 
   int _previousIndex = 0;
 
-  // ✅ Gradient color
   static const Color _brandColor = Color(0xFFF96A4C);
+
+  // ✨ Home screen background colors for blending
+  static const Color _navBgTop =
+      Color(0xFFFFF3EC); // warm cream — matches home bg
+  static const Color _navBgBottom = Color(0xFFFFF8F5); // home scaffold bg
 
   @override
   void initState() {
@@ -83,17 +88,27 @@ class _CustomBottomNavBarState extends State<CustomBottomNavBar>
   Widget build(BuildContext context) {
     return Consumer2<CartProvider, WishlistProvider>(
       builder: (context, cartProvider, wishlistProvider, child) {
-        // ✅ WRAP IN SAFEAREA - ensures visibility
         return SafeArea(
           child: Container(
-            height: 65, // ✅ Reduced height
+            height: 65,
             decoration: BoxDecoration(
-              color: Colors.white,
+              // ✨ Warm gradient instead of flat white — blends with home screen
+              gradient: const LinearGradient(
+                colors: [_navBgTop, _navBgBottom],
+                begin: Alignment.topCenter,
+                end: Alignment.bottomCenter,
+              ),
               boxShadow: [
+                // ✨ Soft orange-tinted top shadow instead of harsh black
                 BoxShadow(
-                  color: Colors.black.withOpacity(0.08),
-                  blurRadius: 8,
-                  offset: const Offset(0, -2),
+                  color: const Color(0xFFF96A4C).withOpacity(0.10),
+                  blurRadius: 16,
+                  offset: const Offset(0, -4),
+                ),
+                BoxShadow(
+                  color: Colors.black.withOpacity(0.04),
+                  blurRadius: 6,
+                  offset: const Offset(0, -1),
                 ),
               ],
             ),
@@ -127,7 +142,6 @@ class _CustomBottomNavBarState extends State<CustomBottomNavBar>
         child: AnimatedBuilder(
           animation: _animationController,
           builder: (context, child) {
-            // Calculate slide offset
             final slideOffset = isSelected
                 ? Offset(
                     (_safeCurrentIndex - _previousIndex) *
@@ -145,18 +159,18 @@ class _CustomBottomNavBarState extends State<CustomBottomNavBar>
                   clipBehavior: Clip.none,
                   alignment: Alignment.center,
                   children: [
-                    // ✅ Gradient circle
+                    // ✨ Active indicator: gradient circle (unchanged)
                     AnimatedContainer(
                       duration: const Duration(milliseconds: 900),
-                      width: isSelected ? 50 : 0, // ✅ Slightly smaller
+                      width: isSelected ? 50 : 0,
                       height: isSelected ? 50 : 0,
                       decoration: BoxDecoration(
                         gradient: isSelected
                             ? const LinearGradient(
                                 colors: [
-                                  Color(0xFFFEAF4E), // #feaf4e
-                                  Color(0xFFF96A4C), // #f96a4c
-                                  Color(0xFFE54481), // #e54481
+                                  Color(0xFFFEAF4E),
+                                  Color(0xFFF96A4C),
+                                  Color(0xFFE54481),
                                 ],
                                 begin: Alignment.topLeft,
                                 end: Alignment.bottomRight,
@@ -166,7 +180,7 @@ class _CustomBottomNavBarState extends State<CustomBottomNavBar>
                         boxShadow: isSelected
                             ? [
                                 BoxShadow(
-                                  color: _brandColor.withOpacity(0.3),
+                                  color: _brandColor.withOpacity(0.30),
                                   blurRadius: 10,
                                   spreadRadius: 1,
                                 ),
@@ -175,19 +189,23 @@ class _CustomBottomNavBarState extends State<CustomBottomNavBar>
                       ),
                     ),
 
-                    // ✅ Icon
+                    // ✨ Icon — inactive icons use warm brown instead of harsh black
                     if (index == 0)
                       Image.asset(
                         'assets/images/loader1.png',
                         width: isSelected ? 40 : 35,
                         height: isSelected ? 40 : 35,
-                        color: isSelected ? Colors.white : Colors.black,
+                        color: isSelected
+                            ? Colors.white
+                            : const Color(0xFF7A4F3A), // warm brown
                         fit: BoxFit.contain,
                         errorBuilder: (context, error, stackTrace) {
                           return Icon(
                             Icons.home,
                             size: isSelected ? 26 : 24,
-                            color: isSelected ? Colors.white : Colors.black,
+                            color: isSelected
+                                ? Colors.white
+                                : const Color(0xFF7A4F3A),
                           );
                         },
                       )
@@ -195,10 +213,12 @@ class _CustomBottomNavBarState extends State<CustomBottomNavBar>
                       Icon(
                         icon,
                         size: isSelected ? 26 : 24,
-                        color: isSelected ? Colors.white : Colors.black,
+                        // ✨ Inactive: warm brown; active: white
+                        color:
+                            isSelected ? Colors.white : const Color(0xFF7A4F3A),
                       ),
 
-                    // ✅ Badge
+                    // Badge
                     if (badgeCount != null && badgeCount > 0)
                       Positioned(
                         right: -6,

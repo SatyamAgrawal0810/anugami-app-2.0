@@ -427,23 +427,47 @@ class _CreateAccountPageState extends State<CreateAccountPage>
                               ),
                               gradient: AppTheme.primaryGradient,
                             ),
-                            child: const Column(
+                            child: Row(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Text(
-                                  'Create your account',
-                                  style: TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 24,
-                                    fontWeight: FontWeight.bold,
+                                const Expanded(
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        'Create your account',
+                                        style: TextStyle(
+                                          color: Colors.white,
+                                          fontSize: 24,
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                      ),
+                                      SizedBox(height: 4),
+                                      Text(
+                                        'Join our community and start shopping',
+                                        style: TextStyle(
+                                          color: Colors.white,
+                                          fontSize: 16,
+                                        ),
+                                      ),
+                                    ],
                                   ),
                                 ),
-                                SizedBox(height: 4),
-                                Text(
-                                  'Join our community and start shopping',
-                                  style: TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 16,
+                                // ✅ Close button — top right
+                                GestureDetector(
+                                  onTap: () => context.go('/home'),
+                                  child: Container(
+                                    padding: const EdgeInsets.all(4),
+                                    decoration: BoxDecoration(
+                                      color: Colors.black.withOpacity(0.25),
+                                      shape: BoxShape.circle,
+                                    ),
+                                    child: const Icon(
+                                      Icons.close,
+                                      color: Colors.black,
+                                      size: 20,
+                                    ),
                                   ),
                                 ),
                               ],
