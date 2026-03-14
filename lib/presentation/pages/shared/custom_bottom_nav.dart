@@ -88,41 +88,42 @@ class _CustomBottomNavBarState extends State<CustomBottomNavBar>
   Widget build(BuildContext context) {
     return Consumer2<CartProvider, WishlistProvider>(
       builder: (context, cartProvider, wishlistProvider, child) {
-        return SafeArea(
-          child: Container(
-            height: 65,
-            decoration: BoxDecoration(
-              // ✨ Warm gradient instead of flat white — blends with home screen
-              gradient: const LinearGradient(
-                colors: [_navBgTop, _navBgBottom],
-                begin: Alignment.topCenter,
-                end: Alignment.bottomCenter,
+        // ✅ Get iOS home indicator height (0 on Android, ~34 on iPhone)
+        final double bottomPadding = MediaQuery.of(context).padding.bottom;
+
+        return Container(
+          height:
+              65 + bottomPadding, // ✅ Extend container to true screen bottom
+          padding: EdgeInsets.only(
+              bottom: bottomPadding), // ✅ Push icons up above home indicator
+          decoration: BoxDecoration(
+            gradient: const LinearGradient(
+              colors: [_navBgTop, _navBgBottom],
+              begin: Alignment.topCenter,
+              end: Alignment.bottomCenter,
+            ),
+            boxShadow: [
+              BoxShadow(
+                color: const Color(0xFFF96A4C).withOpacity(0.10),
+                blurRadius: 16,
+                offset: const Offset(0, -4),
               ),
-              boxShadow: [
-                // ✨ Soft orange-tinted top shadow instead of harsh black
-                BoxShadow(
-                  color: const Color(0xFFF96A4C).withOpacity(0.10),
-                  blurRadius: 16,
-                  offset: const Offset(0, -4),
-                ),
-                BoxShadow(
-                  color: Colors.black.withOpacity(0.04),
-                  blurRadius: 6,
-                  offset: const Offset(0, -1),
-                ),
-              ],
-            ),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: [
-                _buildNavItem(0, Icons.home, null),
-                _buildNavItem(1, Icons.category, null),
-                _buildNavItem(2, Icons.shopping_cart, cartProvider.itemCount),
-                _buildNavItem(
-                    3, Icons.favorite, wishlistProvider.wishlistCount),
-                _buildNavItem(4, Icons.person, null),
-              ],
-            ),
+              BoxShadow(
+                color: Colors.black.withOpacity(0.04),
+                blurRadius: 6,
+                offset: const Offset(0, -1),
+              ),
+            ],
+          ),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: [
+              _buildNavItem(0, Icons.home, null),
+              _buildNavItem(1, Icons.category, null),
+              _buildNavItem(2, Icons.shopping_cart, cartProvider.itemCount),
+              _buildNavItem(3, Icons.favorite, wishlistProvider.wishlistCount),
+              _buildNavItem(4, Icons.person, null),
+            ],
           ),
         );
       },

@@ -110,7 +110,7 @@ class _HomeAppBarState extends State<HomeAppBar>
               children: [
                 // 🏷️ Fixed Logo — no scroll effect
                 Image.asset(
-                  'assets/images/icon1.png',
+                  'assets/images/app_icon.png',
                   height: 75,
                   width: 60,
                   fit: BoxFit.contain,
@@ -129,10 +129,11 @@ class _HomeAppBarState extends State<HomeAppBar>
                         child: Container(
                           height: 50,
                           decoration: BoxDecoration(
-                            color: Colors.white.withOpacity(0.18),
-                            borderRadius: BorderRadius.circular(12),
+                            // ✨ Slightly more opaque for gradient text contrast
+                            color: Colors.white.withOpacity(0.10),
+                            borderRadius: BorderRadius.circular(.08),
                             border: Border.all(
-                              color: Colors.white.withOpacity(0.25),
+                              color: Colors.white.withOpacity(0.15),
                               width: 1,
                             ),
                           ),
@@ -145,31 +146,48 @@ class _HomeAppBarState extends State<HomeAppBar>
                                 size: 24,
                               ),
                               const SizedBox(width: 12),
+
+                              // ✨ Gradient animated search suggestion
                               Expanded(
                                 child: SlideTransition(
                                   position: _slideAnimation,
                                   child: FadeTransition(
                                     opacity: _fadeAnimation,
-                                    child: Text(
-                                      _searchSuggestions[
-                                          _currentSuggestionIndex],
-                                      style: TextStyle(
-                                        color: Colors.white.withOpacity(0.75),
-                                        fontSize: 16,
-                                        fontWeight: FontWeight.w400,
-                                        letterSpacing: 0.2,
+                                    child: ShaderMask(
+                                      shaderCallback: (bounds) =>
+                                          const LinearGradient(
+                                        colors: [
+                                          Color(0xFFFEAF4E), // warm gold
+                                          Color(0xFFF96A4C), // brand orange
+                                          Color(0xFFE54481), // pink
+                                        ],
+                                        begin: Alignment.centerLeft,
+                                        end: Alignment.centerRight,
+                                      ).createShader(bounds),
+                                      blendMode: BlendMode.srcIn,
+                                      child: Text(
+                                        _searchSuggestions[
+                                            _currentSuggestionIndex],
+                                        style: const TextStyle(
+                                          // ShaderMask overrides this with gradient
+                                          color: Colors.white,
+                                          fontSize: 16,
+                                          fontWeight: FontWeight.w500,
+                                          letterSpacing: 0.2,
+                                        ),
+                                        maxLines: 1,
+                                        overflow: TextOverflow.ellipsis,
                                       ),
-                                      maxLines: 1,
-                                      overflow: TextOverflow.ellipsis,
                                     ),
                                   ),
                                 ),
                               ),
+
                               const SizedBox(width: 12),
                               Container(
                                 width: 1,
                                 height: 28,
-                                color: Colors.white.withOpacity(0.30),
+                                color: Colors.white.withOpacity(0.20),
                               ),
                               const SizedBox(width: 12),
                               Icon(

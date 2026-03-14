@@ -6,6 +6,16 @@ import '../../../../config/theme.dart';
 class EmptyCart extends StatelessWidget {
   const EmptyCart({Key? key}) : super(key: key);
 
+  static const _kGradient = LinearGradient(
+    colors: [
+      Color(0xFFFEAF4E),
+      Color(0xFFF96A4C),
+      Color(0xFFE54481),
+    ],
+    begin: Alignment.centerLeft,
+    end: Alignment.centerRight,
+  );
+
   @override
   Widget build(BuildContext context) {
     return Center(
@@ -14,31 +24,32 @@ class EmptyCart extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            // Empty cart illustration
+            // ✨ Same as wishlist — plain circle + app_icon.png (no white tint)
             Container(
-              width: AppTheme.isMobile(context) ? 200 : 250,
-              height: AppTheme.isMobile(context) ? 200 : 250,
+              width: 120,
+              height: 120,
               decoration: BoxDecoration(
-                color: AppTheme.backgroundColor,
+                color: AppTheme.primaryColor.withOpacity(0.1),
                 shape: BoxShape.circle,
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.black.withOpacity(0.1),
-                    blurRadius: 8,
-                    offset: const Offset(0, 4),
-                  ),
-                ],
               ),
-              child: Icon(
-                Icons.shopping_cart_outlined,
-                size: AppTheme.isMobile(context) ? 80 : 100,
-                color: AppTheme.textMuted,
+              child: Center(
+                child: Image.asset(
+                  'assets/images/app_icon.png',
+                  width: 90,
+                  height: 90,
+                  fit: BoxFit.contain,
+                  errorBuilder: (_, __, ___) => const Icon(
+                    Icons.shopping_cart,
+                    size: 60,
+                    color: AppTheme.primaryColor,
+                  ),
+                ),
               ),
             ),
 
             SizedBox(height: AppTheme.space2xl),
 
-            // Main message
+            // Title
             Text(
               'Your cart is empty',
               style: TextStyle(
@@ -64,33 +75,83 @@ class EmptyCart extends StatelessWidget {
 
             SizedBox(height: AppTheme.space3xl),
 
-            // Action buttons
+            // ── Action Buttons ──────────────────────────────────────────
             Column(
               children: [
-                // Primary action - Continue Shopping
-                SizedBox(
-                  width: double.infinity,
-                  height: AppTheme.getButtonHeight(context),
-                  child: ElevatedButton.icon(
-                    onPressed: () => context.push('/home'),
-                    icon: Icon(
-                      Icons.shopping_bag_outlined,
-                      size: AppTheme.getIconSize(context),
+                // ✨ Primary — gradient fill, white icon + text
+                GestureDetector(
+                  onTap: () => context.push('/home'),
+                  child: Container(
+                    width: double.infinity,
+                    height: AppTheme.getButtonHeight(context),
+                    decoration: BoxDecoration(
+                      gradient: _kGradient,
+                      borderRadius: BorderRadius.circular(
+                          AppTheme.getButtonRadius(context)),
+                      boxShadow: const [
+                        BoxShadow(
+                          color: Color(0x44F96A4C),
+                          blurRadius: 12,
+                          offset: Offset(0, 4),
+                        ),
+                      ],
                     ),
-                    label: Text(
-                      'Start Shopping',
-                      style: TextStyle(
-                        fontSize: AppTheme.getBodyFontSize(context),
-                        fontWeight: FontWeight.w600,
-                      ),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Icon(Icons.shopping_bag_outlined,
+                            color: Colors.white,
+                            size: AppTheme.getIconSize(context)),
+                        const SizedBox(width: 10),
+                        Text(
+                          'Start Shopping',
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: AppTheme.getBodyFontSize(context),
+                            fontWeight: FontWeight.w600,
+                          ),
+                        ),
+                      ],
                     ),
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: AppTheme.primaryColor,
-                      foregroundColor: Colors.white,
-                      elevation: 2,
-                      shape: RoundedRectangleBorder(
+                  ),
+                ),
+
+                SizedBox(height: AppTheme.spaceMd),
+
+                // ✨ Secondary — gradient border, black icon + text
+                GestureDetector(
+                  onTap: () => context.push('/categories'),
+                  child: Container(
+                    width: double.infinity,
+                    height: AppTheme.getButtonHeight(context),
+                    decoration: BoxDecoration(
+                      gradient: _kGradient,
+                      borderRadius: BorderRadius.circular(
+                          AppTheme.getButtonRadius(context)),
+                    ),
+                    child: Container(
+                      margin: const EdgeInsets.all(2),
+                      decoration: BoxDecoration(
+                        color: Colors.white,
                         borderRadius: BorderRadius.circular(
-                            AppTheme.getButtonRadius(context)),
+                            AppTheme.getButtonRadius(context) - 2),
+                      ),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Icon(Icons.category_outlined,
+                              color: Colors.black87,
+                              size: AppTheme.getIconSize(context)),
+                          const SizedBox(width: 10),
+                          Text(
+                            'Browse Categories',
+                            style: TextStyle(
+                              color: Colors.black87,
+                              fontSize: AppTheme.getBodyFontSize(context),
+                              fontWeight: FontWeight.w600,
+                            ),
+                          ),
+                        ],
                       ),
                     ),
                   ),
@@ -98,52 +159,25 @@ class EmptyCart extends StatelessWidget {
 
                 SizedBox(height: AppTheme.spaceMd),
 
-                // Secondary action - Browse Categories
-                SizedBox(
-                  width: double.infinity,
-                  height: AppTheme.getButtonHeight(context),
-                  child: OutlinedButton.icon(
-                    onPressed: () => context.push('/categories'),
-                    icon: Icon(
-                      Icons.category_outlined,
-                      size: AppTheme.getIconSize(context),
-                    ),
-                    label: Text(
-                      'Browse Categories',
-                      style: TextStyle(
-                        fontSize: AppTheme.getBodyFontSize(context),
-                        fontWeight: FontWeight.w600,
+                // ✨ Tertiary — no border, no background, plain text + icon
+                GestureDetector(
+                  onTap: () => context.push('/wishlist'),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Icon(Icons.favorite_outline,
+                          color: Colors.black87,
+                          size: AppTheme.getIconSize(context)),
+                      const SizedBox(width: 8),
+                      Text(
+                        'View Wishlist',
+                        style: TextStyle(
+                          color: Colors.black87,
+                          fontSize: AppTheme.getBodyFontSize(context),
+                          fontWeight: FontWeight.w500,
+                        ),
                       ),
-                    ),
-                    style: OutlinedButton.styleFrom(
-                      foregroundColor: AppTheme.primaryColor,
-                      side: const BorderSide(color: AppTheme.primaryColor),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(
-                            AppTheme.getButtonRadius(context)),
-                      ),
-                    ),
-                  ),
-                ),
-
-                SizedBox(height: AppTheme.spaceMd),
-
-                // Tertiary action - View Wishlist
-                TextButton.icon(
-                  onPressed: () => context.push('/wishlist'),
-                  icon: Icon(
-                    Icons.favorite_outline,
-                    size: AppTheme.getIconSize(context),
-                  ),
-                  label: Text(
-                    'View Wishlist',
-                    style: TextStyle(
-                      fontSize: AppTheme.getBodyFontSize(context),
-                      fontWeight: FontWeight.w500,
-                    ),
-                  ),
-                  style: TextButton.styleFrom(
-                    foregroundColor: AppTheme.secondaryColor,
+                    ],
                   ),
                 ),
               ],
@@ -151,7 +185,7 @@ class EmptyCart extends StatelessWidget {
 
             SizedBox(height: AppTheme.space2xl),
 
-            // Feature highlights
+            // ── Feature highlights (tablet only) ────────────────────────
             if (!AppTheme.isMobile(context)) ...[
               Container(
                 padding: AppTheme.getResponsiveCardPadding(context),
@@ -222,15 +256,17 @@ class EmptyCart extends StatelessWidget {
         Container(
           width: 60,
           height: 60,
-          decoration: BoxDecoration(
-            color: AppTheme.primaryColor.withOpacity(0.1),
+          decoration: const BoxDecoration(
+            gradient: _kGradient,
             shape: BoxShape.circle,
+            boxShadow: [
+              BoxShadow(
+                color: Color(0x33F96A4C),
+                blurRadius: 10,
+              ),
+            ],
           ),
-          child: Icon(
-            icon,
-            size: 30,
-            color: AppTheme.primaryColor,
-          ),
+          child: Icon(icon, size: 28, color: Colors.white),
         ),
         const SizedBox(height: 8),
         Text(

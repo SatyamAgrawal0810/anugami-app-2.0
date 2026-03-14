@@ -6,6 +6,16 @@ import '../../../../config/theme.dart';
 class EmptyWishlist extends StatelessWidget {
   const EmptyWishlist({Key? key}) : super(key: key);
 
+  static const _kGradient = LinearGradient(
+    colors: [
+      Color(0xFFFEAF4E), // warm gold
+      Color(0xFFF96A4C), // brand orange
+      Color(0xFFE54481), // pink
+    ],
+    begin: Alignment.centerLeft,
+    end: Alignment.centerRight,
+  );
+
   @override
   Widget build(BuildContext context) {
     return Center(
@@ -63,7 +73,7 @@ class EmptyWishlist extends StatelessWidget {
             // Action Buttons
             Column(
               children: [
-                // Primary Action - Browse Products
+                // Primary Action - Start Shopping (unchanged)
                 SizedBox(
                   width: double.infinity,
                   child: Container(
@@ -94,22 +104,37 @@ class EmptyWishlist extends StatelessWidget {
 
                 const SizedBox(height: 16),
 
-                // Secondary Action - Browse Categories
-                SizedBox(
-                  width: double.infinity,
-                  child: OutlinedButton.icon(
-                    onPressed: () => context.push('/categories'),
-                    icon: const Icon(Icons.category_outlined),
-                    label: const Text('Browse Categories'),
-                    style: OutlinedButton.styleFrom(
-                      foregroundColor: AppTheme.primaryColor,
-                      side: const BorderSide(color: AppTheme.primaryColor),
-                      padding: const EdgeInsets.symmetric(
-                        vertical: 16,
-                        horizontal: 24,
+                // ✨ Secondary Action - Browse Categories (gradient border, black text)
+                GestureDetector(
+                  onTap: () => context.push('/categories'),
+                  child: Container(
+                    width: double.infinity,
+                    height: 52,
+                    decoration: BoxDecoration(
+                      gradient: _kGradient,
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                    child: Container(
+                      margin: const EdgeInsets.all(2),
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(10),
                       ),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(12),
+                      child: const Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Icon(Icons.category_outlined,
+                              color: Colors.black87, size: 20),
+                          SizedBox(width: 10),
+                          Text(
+                            'Browse Categories',
+                            style: TextStyle(
+                              color: Colors.black87,
+                              fontSize: 15,
+                              fontWeight: FontWeight.w600,
+                            ),
+                          ),
+                        ],
                       ),
                     ),
                   ),
@@ -119,7 +144,7 @@ class EmptyWishlist extends StatelessWidget {
 
             const SizedBox(height: 40),
 
-            // Tips Section
+            // Tips Section (unchanged)
             Container(
               padding: const EdgeInsets.all(20),
               decoration: BoxDecoration(
